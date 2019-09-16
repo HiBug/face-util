@@ -1,6 +1,7 @@
 package cn.heypai.util.api;
 
 import cn.heypai.util.api.bean.*;
+import cn.heypai.util.api.bean.facealbum.*;
 import cn.heypai.util.api.face.FaceApi;
 import cn.heypai.util.api.face.IFaceApi;
 import cn.heypai.util.api.humanbody.HumanBodyApi;
@@ -285,6 +286,36 @@ public class FacePPApi implements IFaceApi, IHumanBodyApi, IOcrApi, IImageApi {
 
 	public void recognizePlat(Map<String, String> params, byte[] filePath, IFacePPCallBack<LicensePlatResponse> callBack) {
 		imageApi.recognizePlat(buildParams(params), filePath, callBack);
+	}
+
+	@Override
+	public void createFaceAlbum(Map<String, String> params, IFacePPCallBack<FaceAlbumCreateResponse> callBack) {
+		imageApi.createFaceAlbum(buildParams(params), callBack);
+	}
+
+	@Override
+	public void asyncAddImage2FaceAlbum(Map<String, String> params, IFacePPCallBack<FaceAlbumAsyncAddImageResponse> callBack) {
+		imageApi.asyncAddImage2FaceAlbum(buildParams(params), callBack);
+	}
+
+	@Override
+	public void addImage2FaceAlbum(Map<String, String> params, IFacePPCallBack<FaceAlbumAddImgResponse> callBack) {
+		imageApi.addImage2FaceAlbum(buildParams(params), callBack);
+	}
+
+	@Override
+	public void asyncSearchImg(Map<String, String> params, IFacePPCallBack<FaceAlbumAsyncSearchResponse> callBack) {
+		imageApi.asyncSearchImg(buildParams(params), callBack);
+	}
+
+	@Override
+	public void searchTaskQuery(Map<String, String> params, IFacePPCallBack<FaceAlbumSearchResultQueryResponse> callBack) {
+		imageApi.searchTaskQuery(buildParams(params), callBack);
+	}
+
+	@Override
+	public void faceAlbumDetail(Map<String, String> params, IFacePPCallBack<FaceAlbumDetailResponse> callBack) {
+		imageApi.faceAlbumDetail(buildParams(params), callBack);
 	}
 
 	private Map<String, String> buildParams(Map<String, String> params) {
