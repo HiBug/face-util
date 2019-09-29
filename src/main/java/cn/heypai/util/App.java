@@ -17,10 +17,10 @@ public class App {
 	public static void main(String[] args) throws Exception {
 		String imgUrl     = "http://cdn.zhaopian.live/FjhUbr-UbKSam5ne5aLYcuppUh0d";
 		String albumToken = "1568551847-cd382ac2-16ce-4ef3-aa58-0c6b387f14d6";
+		String noFaceUrl  = "http://cdn.zhaopian.live/FotQiTAIlGudrl20gi46afiUSTzS";
 
-		// getAlbumDetail(albumToken);
-		// searchTaskQuery(null);
-		addImage2FaceAlbum(albumToken, imgUrl);
+		getAlbumDetail(albumToken);
+		// addImage2FaceAlbum(albumToken, "http://cdn.zhaopian.live/FotQiTAIlGudrl20gi46afiUSTzS");
 		// asyncSearchImg(albumToken, imgUrl, App::searchTaskQuery);
 	}
 
