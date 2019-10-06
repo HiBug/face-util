@@ -318,6 +318,11 @@ public class FacePPApi implements IFaceApi, IHumanBodyApi, IOcrApi, IImageApi {
 		imageApi.faceAlbumDetail(buildParams(params), callBack);
 	}
 
+	@Override
+	public void groupFace(Map<String, String> params, IFacePPCallBack<FaceAlbumGroupFaceResponse> callBack) {
+		imageApi.groupFace(buildParams(params), callBack);
+	}
+
 	private Map<String, String> buildParams(Map<String, String> params) {
 		Map<String, String> result = Maps.newHashMap(AUTH_INFO);
 		if (MapUtils.isNotEmpty(params)) {

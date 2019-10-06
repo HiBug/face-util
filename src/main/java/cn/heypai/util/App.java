@@ -19,9 +19,10 @@ public class App {
 		String albumToken = "1568551847-cd382ac2-16ce-4ef3-aa58-0c6b387f14d6";
 		String noFaceUrl  = "http://cdn.zhaopian.live/FotQiTAIlGudrl20gi46afiUSTzS";
 
-		getAlbumDetail(albumToken);
-		// addImage2FaceAlbum(albumToken, "http://cdn.zhaopian.live/FotQiTAIlGudrl20gi46afiUSTzS");
-		// asyncSearchImg(albumToken, imgUrl, App::searchTaskQuery);
+		// getAlbumDetail(albumToken);
+		// addImage2FaceAlbum(albumToken, "http://cdn.zhaopian.live/WX20191006-151810@2x.png");
+		// groupFace(albumToken, "");
+		asyncSearchImg(albumToken, imgUrl, App::searchTaskQuery);
 	}
 
 	private static void getAlbumDetail(String albumToken) {
@@ -96,8 +97,42 @@ public class App {
 
 	}
 
+	/**
+	 * 人脸聚合
+	 *
+	 * @param faceAlbumToken
+	 * @param operation_type 人脸分组操作类型，有效值为：
+	 *                       <p>
+	 *                       incremental：增量操作
+	 *                       entirefacealbum：全量操作
+	 *                       注：增量操作不会改变 group_id!=0 和 group_id!=-1 的人脸分组，且只返回
+	 *                       <p>
+	 *                       增量结果
+	 *                       <p>
+	 *                       默认值：incremental
+	 */
+	private static void groupFace(String faceAlbumToken, String operation_type) {
+		facePPApi.groupFace(ImmutableMap.of("facealbum_token", faceAlbumToken),
+				new IFacePPCallBack<FaceAlbumGroupFaceResponse>() {
+					@Override
+					public void onSuccess(FaceAlbumGroupFaceResponse response) {
+						System.out.println(JSON.toJSONString(response));
+					}
+
+					@Override
+					public void onFailed(String error) {
+						System.out.println(error);
+					}
+				});
+	}
+
 	//获取搜索结果
 	private static void searchTaskQuery(String taskId) {
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		facePPApi.searchTaskQuery(ImmutableMap.of("task_id", taskId),
 				new IFacePPCallBack<FaceAlbumSearchResultQueryResponse>() {
 					@Override

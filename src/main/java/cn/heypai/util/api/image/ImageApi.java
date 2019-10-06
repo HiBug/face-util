@@ -103,4 +103,9 @@ public class ImageApi implements IImageApi {
 	public void faceAlbumDetail(Map<String, String> params, IFacePPCallBack<FaceAlbumDetailResponse> callBack) {
 		HttpUtils.post(API_FACE_ALBUM_DETAIL, params, new TransCallBack<>(callBack, FaceAlbumDetailResponse.class));
 	}
+
+	@Override
+	public void groupFace(Map<String, String> params, IFacePPCallBack<FaceAlbumGroupFaceResponse> callBack) {
+		HttpUtils.post(API_FACE_GROUP_FACE, params, new TransCallBack<>(callBack, FaceAlbumGroupFaceResponse.class));
+	}
 }

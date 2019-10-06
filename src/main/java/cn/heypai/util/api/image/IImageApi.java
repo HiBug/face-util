@@ -27,6 +27,7 @@ public interface IImageApi {
 	String API_FACE_ALBUM_ASYNC_SEARCH       = BASE_URL + "/v1/facealbum/searchimage";
 	String API_FACE_ALBUM_SEARCH_TASK_RESULT = BASE_URL + "/v1/facealbum/searchimagetaskquery";
 	String API_FACE_ALBUM_DETAIL             = BASE_URL + "/v1/facealbum/getalbumdetail";
+	String API_FACE_GROUP_FACE               = BASE_URL + "/v1/facealbum/groupface";
 
 	/**
 	 * 场景识别
@@ -115,4 +116,12 @@ public interface IImageApi {
 	 * @param callBack
 	 */
 	void faceAlbumDetail(Map<String, String> params, IFacePPCallBack<FaceAlbumDetailResponse> callBack);
+
+	/**
+	 * 类聚人脸
+	 *
+	 * @param params
+	 * @param callBack
+	 */
+	void groupFace(Map<String, String> params, IFacePPCallBack<FaceAlbumGroupFaceResponse> callBack);
 }
