@@ -2,6 +2,7 @@ package cn.heypai.util;
 
 import cn.heypai.util.api.FacePPApi;
 import cn.heypai.util.api.IFacePPCallBack;
+import cn.heypai.util.api.bean.RecognizeTextRespons;
 import cn.heypai.util.api.bean.facealbum.*;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.ImmutableMap;
@@ -9,7 +10,6 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class App {
 	private static FacePPApi facePPApi = new FacePPApi("MYh9VgzCkD2lskmfE4YJax31z-Ab_fKk", "XlXqZRhlTJvc9Y1jgHABddwHBzuyRcNl");
@@ -18,12 +18,17 @@ public class App {
 		String imgUrl     = "http://cdn.zhaopian.live/FjhUbr-UbKSam5ne5aLYcuppUh0d";
 		String albumToken = "1568551847-cd382ac2-16ce-4ef3-aa58-0c6b387f14d6";
 		String noFaceUrl  = "http://cdn.zhaopian.live/FotQiTAIlGudrl20gi46afiUSTzS";
+		String textUrl    = "https://cdn.zhaopian.live/Fg0XxnQjN6gZC2OYAW9HqhYaBOhw?imageView2/2/w/800";
 
 		// getAlbumDetail(albumToken);
 		// addImage2FaceAlbum(albumToken, "http://cdn.zhaopian.live/WX20191006-151810@2x.png");
 		// groupFace(albumToken, "");
-		asyncSearchImg(albumToken, imgUrl, App::searchTaskQuery);
+		// String taskId = asyncSearchImg(albumToken, imgUrl);
+		// searchTaskQuery("ba2c9c43-f331-4415-a54e-278676506d55");
+
+		recognizeText(textUrl);
 	}
+
 
 	private static void getAlbumDetail(String albumToken) {
 		facePPApi.faceAlbumDetail(ImmutableMap.of("facealbum_token", albumToken), new IFacePPCallBack<FaceAlbumDetailResponse>() {
@@ -79,14 +84,15 @@ public class App {
 	}
 
 	//异步搜索
-	private static void asyncSearchImg(String albumToken, String searchImg, Consumer<String> consumer) {
+	private static String asyncSearchImg(String albumToken, String searchImg) {
+		FaceAlbumAsyncSearchResponse result = new FaceAlbumAsyncSearchResponse();
 		facePPApi.asyncSearchImg(ImmutableMap.of("facealbum_token", albumToken
 				, "image_url", searchImg),
 				new IFacePPCallBack<FaceAlbumAsyncSearchResponse>() {
 					@Override
 					public void onSuccess(FaceAlbumAsyncSearchResponse response) {
 						System.out.println("asyncSearchImg:" + JSON.toJSONString(response));
-						consumer.accept(response.getTask_id());
+						result.setTask_id(response.getTask_id());
 					}
 
 					@Override
@@ -94,6 +100,7 @@ public class App {
 						System.out.println(error);
 					}
 				});
+		return result.getTask_id();
 
 	}
 
@@ -128,16 +135,26 @@ public class App {
 
 	//获取搜索结果
 	private static void searchTaskQuery(String taskId) {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		facePPApi.searchTaskQuery(ImmutableMap.of("task_id", taskId),
 				new IFacePPCallBack<FaceAlbumSearchResultQueryResponse>() {
 					@Override
 					public void onSuccess(FaceAlbumSearchResultQueryResponse response) {
 						System.out.println("searchTaskQuery:" + JSON.toJSONString(response));
+					}
+
+					@Override
+					public void onFailed(String error) {
+						System.out.println(error);
+					}
+				});
+	}
+
+	private static void recognizeText(String url) {
+		facePPApi.recognizeText(ImmutableMap.of("image_url", url),
+				new IFacePPCallBack<RecognizeTextRespons>() {
+					@Override
+					public void onSuccess(RecognizeTextRespons response) {
+						System.out.println(JSON.toJSONString(response));
 					}
 
 					@Override
